@@ -41,7 +41,7 @@ func Create() (*DB) {
 the above function does initialize our `data` to be of type `[string]string`.
 
 
-####### Creating APIs.
+###### Creating APIs.
 
 We will be exposing our API's which will allow the end user to put their data into the memory. Since we are
 calling this a in-memory database, we will create a struct which holds the current transaction data:
@@ -93,7 +93,7 @@ for this is the underlying datastore our `map` is **shared** between concurrent 
 In order to solve the issue, we need a lock!
 
 
-####### Mutex In Golang
+###### Mutex In Golang
 
 Remember our `DB` struct:
 
@@ -301,7 +301,7 @@ func main() {
 Here we are creating two goroutines which will concurrently/parallel based on your machine core configs.
 Try spawning many goroutines and see it in action our simple concurrent safe in memory database.
 
-Remember that, all operation inside either `Update` or `View` is concurrently safe. 
+Remember that, all operation inside either `Update` or `View` is concurrently safe.
 
 The entire source code is at the file `simple_db.go`.
 
