@@ -56,23 +56,19 @@ func (db * DB) Update(fn func (tx *Tx) error) error {
 	return db.managed(true, fn)
 }
 
-func (db *DB) Begin(writable bool) (*Tx,error) {
+func (db *DB) Begin(writable bool) (*Tx) {
 	tx := &Tx {
 		db : db,
 		writable: writable,
 	}
 	tx.lock()
 
-	return tx,nil
+	return tx
 }
 
 func (db *DB) managed(writable bool, fn func(tx *Tx) error) (err error) {
 	var tx *Tx
-	tx, err = db.Begin(writable)
-	if err != nil {
-		return
-	}
-
+	tx = db.Begin(writable)
 	defer func() {
 		if writable {
 			fmt.Println("Write Unlocking...")
@@ -83,7 +79,7 @@ func (db *DB) managed(writable bool, fn func(tx *Tx) error) (err error) {
 		}
 	}()
 
-	err = fn(tx)
+	fn(tx)
 	return
 }
 
